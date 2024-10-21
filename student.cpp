@@ -4,6 +4,7 @@
 #include <sstream>
 
 Student::Student(const char * const name, int perm) {
+
   this->name = new char[strlen(name) +1]; //allocate memory for this->name
   strcpy(this->name, name); //copy name contents into this->name
   this->perm = perm; //set out perm to the given perm
@@ -27,12 +28,10 @@ void Student::setName(const char * const name) {
   strcpy(this->name, name); //copy contents of name into our name
 }
 
-
 Student::Student(const Student &orig) {
   this->name = new char[strlen(orig.name)+1]; //allocate memory for new name
   strcpy(this->name, orig.name); //copy contents of original name into our name
   this->perm = orig.perm; //copy original perm to our perm
-
 }
 
 Student::~Student() {
@@ -47,6 +46,8 @@ Student & Student::operator=(const Student &right) {
 
   if (&right == this)  
     return (*this);
+
+  delete [] this->name;
 
   this->name = new char[strlen(right.name)+1]; //allocate memory for our name
   strcpy(this->name, right.name); //copy contents of the right name into ours
