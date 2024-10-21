@@ -37,11 +37,10 @@ std::string StudentRoll::toString() const {
 }
 
 StudentRoll::StudentRoll(const StudentRoll &orig) {
-  // STUB
   head = nullptr;
   tail = nullptr;
-  Node* current = orig.head;
-  while (current != nullptr) {
+  Node* current = orig.head; //start at origins head
+  while (current != nullptr) { //keep inserting origin values to ours
     insertAtTail(*(current->s));
     current = current->next;
   }
@@ -51,8 +50,8 @@ StudentRoll::~StudentRoll() {
   Node* current = head;
   while (current != nullptr) {
     Node* nextNode = current->next;
-    delete current->s;
-    delete current;
+    delete current->s; //delete the student
+    delete current; //delete the node itself
     current = nextNode;
   }
 }
@@ -75,8 +74,6 @@ StudentRoll & StudentRoll::operator =(const StudentRoll &right ) {
 
   head = nullptr;
   tail = nullptr;
-  // TODO... Here is where there is code missing that you need to 
-  // fill in...
   current = right.head;
   while (current != nullptr) {
     insertAtTail(*(current->s));
