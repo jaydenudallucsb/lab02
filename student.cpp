@@ -1,35 +1,43 @@
 #include "student.h"
 #include <string>
 #include <cstring>
+#include <sstream>
 
 Student::Student(const char * const name, int perm) {
-  this->setName("another stub");
+  this->name = new char[strlen(name) +1]; //allocate memory for this->name
+  strcpy(this->name, name); //copy name contents into this->name
+  this->perm = perm; //set out perm to the given perm
 }
 
 int Student::getPerm() const {
-  return -42;
+  return this->perm; //return our perm
 }
 
 const char * const Student::getName() const {
-  return "stub";
+  return this->name; //return our name
 }
 
 void Student::setPerm(const int permNumber) {
+  this->perm = permNumber; //set our perm to permNumber
 }
 
 void Student::setName(const char * const name) {
-  this->name = new char[strlen("stub")+1];
-  strcpy(this->name,"stub");
+  delete [] this->name; //delete our previous name memory
+  this->name = new char[strlen(name)+1]; //allocate new memory for name
+  strcpy(this->name, name); //copy contents of name into our name
 }
 
 
 Student::Student(const Student &orig) {
-  this->setName("yet another stub");
-  this->setPerm(-42);
+  this->name = new char[strlen(orig.name)+1]; //allocate memory for new name
+  strcpy(this->name, orig.name); //copy contents of original name into our name
+  this->perm = orig.perm; //copy original perm to our perm
+
 }
 
 Student::~Student() {
-
+  delete [] name; //delete name memory
+  
 }
 
 Student & Student::operator=(const Student &right) {
@@ -37,12 +45,12 @@ Student & Student::operator=(const Student &right) {
   // They avoid problems with self-assignment where you might free up 
   // memory before you copy from it.  (e.g. x = x)
 
-  if (&right == this) 
+  if (&right == this)  
     return (*this);
 
-  // TODO... Here is where there is code missing that you need to 
-  // fill in...
-
+  this->name = new char[strlen(right.name)+1]; //allocate memory for our name
+  strcpy(this->name, right.name); //copy contents of the right name into ours
+  this->perm = right.perm; //copy right perm to ours
 
   // KEEP THE CODE BELOW THIS LINE
   // Overloaded = should end with this line, despite what the textbook says.
@@ -51,6 +59,8 @@ Student & Student::operator=(const Student &right) {
 }
 
 std::string Student::toString() const {
-  return "tostring stub";
+  std::ostringstream oss; 
+  oss << "[" << name << "," << perm << "]";
+  return oss.str();
 }
 
